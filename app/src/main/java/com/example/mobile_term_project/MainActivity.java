@@ -34,24 +34,36 @@ public class MainActivity extends AppCompatActivity implements
             return insets;
         });
     }
-    @Override
     public float x,y;
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
         switch(event.getAction()) {
             case (MotionEvent.ACTION_DOWN) :
-                Log.d("DEBUG_TAG","Action was DOWN");
+                //Log.d("DEBUG_TAG","Action was DOWN");
                 x = event.getX();
                 y = event.getY();
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                Log.d("DEBUG_TAG","Action was MOVE");
+                //Log.d("DEBUG_TAG","Action was MOVE");
                 return true;
             case (MotionEvent.ACTION_UP) :
                 float newX = event.getX();
                 float newY = event.getY();
-                if(Math.abs(x-newX) > Math.abs(y-newY)){}
-                Log.d("DEBUG_TAG","Action was UP");
+                if(Math.abs(x-newX) > Math.abs(y-newY)){
+                    if(x-newX <= 0){
+                        Log.d("DEBUG_TAG","Action was moving right");
+                    }else{
+                        Log.d("DEBUG_TAG","Action was moving left");
+                    }
+                }else{
+                    if(y-newY <= 0){
+                        Log.d("DEBUG_TAG","Action was moving down");
+                    }else{
+                        Log.d("DEBUG_TAG","Action was moving up");
+                    }
+                }
+                //Log.d("DEBUG_TAG","Action was UP");
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
                 Log.d("DEBUG_TAG","Action was CANCEL");
