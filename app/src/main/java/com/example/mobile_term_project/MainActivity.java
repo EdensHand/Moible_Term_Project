@@ -1,11 +1,11 @@
 package com.example.mobile_term_project;
 
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -52,15 +52,15 @@ public class MainActivity extends AppCompatActivity implements
                 float newY = event.getY();
                 if(Math.abs(x-newX) > Math.abs(y-newY)){
                     if(x-newX <= 0){
-                        Log.d("DEBUG_TAG","Action was moving right");
+                        Toast.makeText(this,"Right", Toast.LENGTH_SHORT).show();
                     }else{
-                        Log.d("DEBUG_TAG","Action was moving left");
+                        Toast.makeText(this,"Left", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     if(y-newY <= 0){
-                        Log.d("DEBUG_TAG","Action was moving down");
+                        Toast.makeText(this,"Down", Toast.LENGTH_SHORT).show();
                     }else{
-                        Log.d("DEBUG_TAG","Action was moving up");
+                        Toast.makeText(this,"Up", Toast.LENGTH_SHORT).show();
                     }
                 }
                 //Log.d("DEBUG_TAG","Action was UP");
