@@ -138,8 +138,4 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     }
                 });
     }
-
-    public ArrayList<String> getSwipeData(){
-        return swipeData;
-    }
 }
