@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // Pass the username as an extra
             intent.putExtra("USERNAME", username);
-
+            usernameEditText.getText().clear();
             // Start the MainActivity
             startActivity(intent);
         });
