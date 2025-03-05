@@ -15,10 +15,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements
-        View.OnTouchListener //On touch listener implemented to allow for clicking functionality defined below
-    {
+import java.util.ArrayList;
 
+//On touch listener implemented to allow for clicking functionality defined below
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+
+    private final ArrayList<String> swipeHistory = new ArrayList<>();
+    private float x, y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,54 +35,71 @@ public class MainActivity extends AppCompatActivity implements
             return insets;
         });
     }
-    /*
-    * This is the begging of the ontouch
-    * */
-    public float x,y;
+
+    //This is the begging of the onTouch
+    private Toast currentToast;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()) {
             case (MotionEvent.ACTION_DOWN) :
                 Log.d("DEBUG_TAG","Action was DOWN");
-                /*
-                * retrieve intial x and y on down action
-                * */
+                //retrieve intial x and y on down action
                 x = event.getX();
                 y = event.getY();
                 return true;
+
             case (MotionEvent.ACTION_MOVE) :
                 Log.d("DEBUG_TAG","Action was MOVE");
                 return true;
+
             case (MotionEvent.ACTION_UP) :
-                /*
-                * retrieves the final x and y and uses simple if else to determine the direction of the swipe
-                * */
+                //retrieves the final x and y and uses simple if else to determine the direction of the swipe
                 float newX = event.getX();
                 float newY = event.getY();
-                if(Math.abs(x-newX) > Math.abs(y-newY)){
-                    if(x-newX <= 0){
-                        Toast.makeText(this,"Right", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this,"Left", Toast.LENGTH_SHORT).show();
+                String swipeDirection;
+
+                if (Math.abs(x - newX) > Math.abs(y - newY)){
+                    if (x - newX <= 0){
+                        swipeDirection = "Right";
+                    } else {
+                        swipeDirection = "Left";
                     }
-                }else{
-                    if(y-newY <= 0){
-                        Toast.makeText(this,"Down", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this,"Up", Toast.LENGTH_SHORT).show();
+                } else {
+                    if(y - newY <= 0){
+                        swipeDirection = "Down";
+                    } else {
+                        swipeDirection = "Up";
                     }
                 }
+
+                swipeHistory.add(swipeDirection);
+
+                if (currentToast != null){
+                    currentToast.cancel();
+                }
+
+                currentToast = Toast.makeText(this, swipeDirection, Toast.LENGTH_SHORT);
+                currentToast.show();
+
                 Log.d("DEBUG_TAG","Action was UP");
                 return true;
+
             case (MotionEvent.ACTION_CANCEL) :
                 Log.d("DEBUG_TAG","Action was CANCEL");
                 return true;
+
             case (MotionEvent.ACTION_OUTSIDE) :
                 Log.d("DEBUG_TAG","Movement occurred outside bounds of current screen element");
                 return true;
+
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    public ArrayList<String> getSwipeHistory(){
+        return swipeHistory;
     }
 }
