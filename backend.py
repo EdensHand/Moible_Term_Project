@@ -15,5 +15,9 @@ message = ref.get()
 if message == None:
     print(f"User \"{user}\" does not exist in the database.")
 else:
-    print(f"Read from Firebase: {message}")
+    #print(f"Read from Firebase: {message}")
+    for key, value in message.items():
+        for item in str(value).split(','):
+            print(item.replace("'",'').replace("{",'').replace("}",''))
+
 print()
