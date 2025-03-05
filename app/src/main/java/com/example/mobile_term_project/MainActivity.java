@@ -25,16 +25,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            .withZone(ZoneOffset.UTC);
     private final ArrayList<String> swipeData = new ArrayList<>();
     private String timeStamp;
     private DatabaseReference swipeRef;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         userName = getIntent().getStringExtra("USERNAME");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         swipeRef = database.getReference(userName);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        //sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // 1. Create the Rainbow Colors
         int[] rainbowColors = {
                 Color.RED, Color.rgb(255, 165, 0), Color.YELLOW,
-                Color.GREEN, Color.BLUE, Color.rgb(75, 0, 130), Color.rgb(238, 130, 238)
+                Color.GREEN, Color.BLUE, Color.rgb(75, 0, 130),
+                Color.rgb(238, 130, 238)
         };
 
         // 2. Create the Gradient
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             case (MotionEvent.ACTION_DOWN):
                 x = event.getX();
                 y = event.getY();
-                timeStamp = sdf.format(new Date());
+                timeStamp = formatter.format(Instant.now());
                 startTime = System.currentTimeMillis();
                 return true;
 
