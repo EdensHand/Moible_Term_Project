@@ -22,19 +22,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 //On touch listener implemented to allow for clicking functionality defined below
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     private final ArrayList<String> swipeData = new ArrayList<>();
-    private String userName;
     private String timeStamp;
     private DatabaseReference swipeRef;
     private float x, y;
@@ -44,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userName = "User";
+        String userName = "User";
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        swipeRef = database.getReference("swipes");
+        swipeRef = database.getReference(userName);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         EdgeToEdge.enable(this);
@@ -67,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()) {
             case (MotionEvent.ACTION_DOWN) :
-                //Log.d("DEBUG_TAG","Action was DOWN");
                 //retrieve initial x and y on down action
                 x = event.getX();
                 y = event.getY();
@@ -76,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 return true;
 
             case (MotionEvent.ACTION_MOVE) :
-                //Log.d("DEBUG_TAG","Action was MOVE");
                 return true;
 
             case (MotionEvent.ACTION_UP) :
@@ -95,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 String swipeDuration = String.valueOf(endTime - startTime);
 
                 swipeData.clear();
-                swipeData.add(userName);
                 swipeData.add(swipeDirection);
                 swipeData.add(swipeDuration);
                 swipeData.add(timeStamp);
@@ -108,8 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 currentToast.show();
 
                 sendSwipeDataToFirebase(swipeData);
-
-                //Log.d("DEBUG_TAG","Action was UP");
                 return true;
 
             case (MotionEvent.ACTION_CANCEL) :
@@ -131,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         // Create a map to store the data
         Map<String, Object> swipeMap = new HashMap<>();
-        swipeMap.put("userName", swipeData.get(0));
-        swipeMap.put("swipeDirection", swipeData.get(1));
-        swipeMap.put("swipeDuration", swipeData.get(2));
-        swipeMap.put("timeStamp", swipeData.get(3));
+        swipeMap.put("swipeDirection", swipeData.get(0));
+        swipeMap.put("swipeDuration", swipeData.get(1));
+        swipeMap.put("timeStamp", swipeData.get(2));
 
         // Send the data to Firebase
+        assert swipeId != null;
         swipeRef.child(swipeId).setValue(swipeMap)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
