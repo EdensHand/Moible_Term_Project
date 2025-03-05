@@ -11,15 +11,14 @@ firebase_admin.initialize_app(cred, {
 user = input("Please enter the username of the individual whose data you'd like to retrieve: ")
 print()
 ref = db.reference(user)
-message = ref.get()
-if message == None:
+data = ref.get()
+if data is None:
     print(f"User \"{user}\" does not exist in the database.")
 else:
-    #print(f"Read from Firebase: {message}")
-    for key, value in message.items():
-        for item in str(value).split(','):
-            print(item.replace("'",'').replace("{",'').replace("}",''))
-
-print()
-
-#test commit in pycharm
+    sorted_data = sorted(data.items(), key=lambda x: x[1]['timeStamp'], reverse=True)
+    print(f"Swipe Data for {user}:\n")
+    for key, value in data.items():
+        print(f"Timestamp: {value['timeStamp']}")
+        print(f"  - Direction: {value['swipeDirection']}")
+        print(f"  - Duration: {value['swipeDuration']} ms")
+        print("-" * 40)
