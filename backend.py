@@ -17,7 +17,7 @@ if data is None:
 else:
     sorted_data = sorted(data.items(), key=lambda x: x[1]['timeStamp'], reverse=True)
     print(f"Swipe Data for {user}:\n")
-    for key, value in data.items():
+    for key, value in sorted_data:
         print(f"Timestamp: {value['timeStamp']}")
         print(f"  - Direction: {value['swipeDirection']}")
         print(f"  - Duration: {value['swipeDuration']} ms")
