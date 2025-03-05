@@ -35,11 +35,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private float x, y;
     private long startTime;
 
+    String userName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String userName = "User";
+        userName = getIntent().getStringExtra("USERNAME");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         swipeRef = database.getReference(userName);
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
