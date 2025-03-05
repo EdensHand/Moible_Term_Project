@@ -69,16 +69,20 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
+            if (username.isEmpty()) {
+                usernameEditText.setError("Username cannot be empty");
+                return;
+            }else {
+                // Create an Intent to start MainActivity
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
-            // Create an Intent to start MainActivity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                // Pass the username as an extra
+                intent.putExtra("USERNAME", username);
 
-            // Pass the username as an extra
-            intent.putExtra("USERNAME", username);
-
-            // Start the MainActivity
-            startActivity(intent);
-            usernameEditText.getText().clear();
+                // Start the MainActivity
+                startActivity(intent);
+                usernameEditText.getText().clear();
+            }
         });
     }
 }
