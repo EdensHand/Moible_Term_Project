@@ -21,3 +21,5 @@ else:
             print(item.replace("'",'').replace("{",'').replace("}",''))
 
 print()
+
+#test commit in pycharm
