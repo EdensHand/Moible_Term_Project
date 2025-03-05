@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString();
             if (username.isEmpty()) {
                 usernameEditText.setError("Username cannot be empty");
-                return;
             }else {
                 // Create an Intent to start MainActivity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
