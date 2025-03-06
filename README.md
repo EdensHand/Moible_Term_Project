@@ -40,14 +40,6 @@ For each swipe gesture, the app captures the following data points:
 - **Timestamp**: Records the time when the swipe occurred.
 - **Article/Item ID**: Tracks which article or image was swiped.
 
-### Firebase Realtime Database Structure
-The data is stored in Firebase Realtime Database with the following structure:
-/username
-/swipeID
-/swipeDirection
-/swipeDurration
-/timestamp
-
 ## Python Backend
 
 ### Function
