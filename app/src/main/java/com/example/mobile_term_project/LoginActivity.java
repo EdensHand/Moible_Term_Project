@@ -72,6 +72,10 @@ public class LoginActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString();
             if (username.isEmpty()) {
                 usernameEditText.setError("Provide a Username");
+            } else if (username.length() > 15) {
+                usernameEditText.setError("Username cannot be longer than 15 characters");
+            } else if (username.length() < 4) {
+                usernameEditText.setError("Username cannot be shorter than 4 characters");
             } else if (containsInvalidCharacters(username)) {
                 usernameEditText.setError("Username cannot contain '.', '#', '$', '[', or ']'");
             } else {
