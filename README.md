@@ -8,7 +8,7 @@
 
 ## Project Overview
 
-This project is a mobile application that integrates an Android app with Firebase for data storage, while a Python backend is used to access the stored data in the Firebase database. The app allows users to log in with a username and record directional swipes, then store the user's swiping data in a Firebase Realtime Database. The backend handles admin retreval of the swipe data by user and prints out the requested data in redable format to the console.
+This project is a mobile application that integrates an Android app with Firebase for data storage, while a Python backend is used to access the stored data in the Firebase database. The app allows users to log in with a username and record directional swipes, then store the user's swiping data in a Firebase Realtime Database. The backend handles admin retrieval of the swipe data by user and prints out the requested data in readable format to the console.
 
 ---
 
@@ -31,8 +31,8 @@ In the `MainActivity`, swipe gestures are detected using `OnTouchListener`. When
 3. **Send Data to Firebase**: After a swipe is completed, the swipe data (direction, duration, timestamp) is stored in Firebase under the user's username.
 
 ### Challenges
-- **Finding appropiate Data Structure**: `ArrayList` works great to store swipe data on device, but not compadable with Firebase. Once data is ready to send, `ArrayList` converted to `hashmap` for ease of Firebase data storage.
-- **Firebase Connectivity**: Implementing appropiate and combatible libaries, versions, and meathods to succesffully and reliably connect to the Firebase took significant trial and error. Generative AI assisted in the troubleshooting of `sendSwipeDataToFirebase`. 
+- **Finding an Appropriate Data Structure**: `ArrayList` works well to store swipe data on-device, but is not compatible with Firebase. Once data is ready to send, `ArrayList` is converted to `hashmap` for proper Firebase data storage.
+- **Firebase Connectivity**: Implementing appropriate and compatible libraries, versions, and methods to successfully and reliably connect to the Firebase took significant trial and error. Generative AI assisted in the troubleshooting of `sendSwipeDataToFirebase`. 
 
 #### How to Run:
 1. Clone the repository.  **OR**  Unzip `touchalytics-android-proj-ptk406-wuj591.zip` into Android Studio environment.
@@ -47,7 +47,7 @@ In the `MainActivity`, swipe gestures are detected using `OnTouchListener`. When
 For each swipe gesture the app captures, Firebase stores the data as:
 - **User ID**: Identifies the user performing the action.
   - **Swipe Direction**: Indicates whether the user swiped Up, Down, Left, or Right.
-  - **Swipe Duration**: How long in milliseconds since the finger pressed down onto the screen, until it was released.
+  - **Swipe Duration**: Time in milliseconds from when the finger pressed down on the screen until it was released.
   - **Timestamp**: Records the time when the swipe occurred.
 
 ---
@@ -58,7 +58,7 @@ For each swipe gesture the app captures, Firebase stores the data as:
 The Python backend is used to retrieve and display swipe data stored in Firebase. It allows an admin to enter a username and fetch all recorded swipes associated with that user, sorting them in descending order based on their timestamp.
 
 ### How to Run:
-1. Ensure you have Python installed (version 3.10 or later).
+1. Ensure you have Python installed (**version 3.6 or later**).
 2. Install the required dependencies by running: `pip install firebase-admin`.
 3. Place the Firebase service account JSON file `touchalytics-27705-firebase-adminsdk-fbsvc-faa52519b1.json` in the same directory as the Python script.
 4. Run the script: `python3 backend.py`.
