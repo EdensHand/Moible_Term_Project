@@ -1,55 +1,64 @@
-# Project Title
+# Touchalytics
 
 ## Authors
 - Mac Tully (wuj591)
 - Alejandro White (ptk406)
-  
+
+---
+
 ## Project Overview
 
-This project is a mobile application that integrates an Android app with Firebase for data storage and retrieval, while a Python backend is used for processing and additional functionality. The app allows users to interact with a specific feature, collect data, and store it in a Firebase Realtime Database. The backend handles complex tasks and provides APIs for the app to communicate with.
+This project is a mobile application that integrates an Android app with Firebase for data storage, while a Python backend is used to access the stored data in the Firebase database. The app allows users to log in with a username and record directional swipes, then store the user's swiping data in a Firebase Realtime Database. The backend handles admin retreval of the swipe data by user and prints out the requested data in redable format to the console.
+
+---
 
 ## Android App
 
 ### Workflow
-The Android app follows a **news page** workflow where users can swipe through various news items, each with an image and title. Users swipe left or right to compare articles or images, providing feedback through their gestures.
+The app follows a simple login-to-gesture workflow:
+1. The user enters a username in the **LoginActivity**.
+2. Upon successful login, the app proceeds to the **MainActivity**, where users can swipe on the screen.
+3. The swipe gestures are tracked and sent to Firebase for storage.
 
 ### Swipe Gesture Implementation
-The swipe gesture is implemented using the `GestureDetector` class in Android. This class allows detecting both simple swipes and gestures across the app's user interface. We added specific logic to handle left or right swipe actions, triggering events such as moving to the next or previous news article.
+In the `MainActivity`, swipe gestures are detected using `OnTouchListener`. When the user swipes on the screen:
+- **Swipe Direction**: The direction of the swipe (up, down, left, right) is calculated based on the difference between the initial touch coordinates and the final coordinates.
+- **Swipe Duration**: The time taken to complete the swipe is recorded by calculating the difference between the start and end times of the swipe.
 
-Steps to implement swipe gestures:
-1. **Set up GestureDetector**: Create a custom `GestureDetector.OnGestureListener` to detect swipe events.
-2. **Attach to UI component**: Attach this gesture listener to the `RecyclerView` or relevant UI components.
-3. **Handle swipe actions**: Depending on the swipe direction (left or right), the app transitions to the next or previous item.
+#### Steps to Implement Swipe Gestures:
+1. **Track Touch Events**: The `onTouch` method is implemented to capture `ACTION_DOWN`, `ACTION_MOVE`, and `ACTION_UP` events.
+2. **Calculate Direction**: The swipe direction is determined by comparing the horizontal (`x`) and vertical (`y`) movement.
+3. **Send Data to Firebase**: After a swipe is completed, the swipe data (direction, duration, timestamp) is stored in Firebase under the user's username.
 
 ### Challenges
-- **Handling swipe accuracy**: Ensuring the swipe gestures were responsive and consistent across different screen sizes posed a challenge, especially with varying sensitivities in different devices.
-- **UI performance**: Ensuring smooth transitions between items while maintaining UI performance required optimizations.
+- **Finding appropiate Data Structure**: `ArrayList` works great to store swipe data on device, but not compadable with Firebase. Once data is ready to send, `ArrayList` converted to `hashmap` for ease of Firebase data storage.
+- **Firebase Connectivity**: Implementing appropiate and combatible libaries, versions, and meathods to succesffully and reliably connect to the Firebase took significant trial and error. Generative AI assisted in the troubleshooting of `sendSwipeDataToFirebase`. 
 
 #### How to Run:
-1. Clone the repository.
-2. Open the project in Android Studio.
-3. Build and run the app on an Android emulator or device.
-4. Ensure necessary permissions are granted (e.g., internet access for Firebase).
+1. Clone the repository.  **OR**  Unzip `touchalytics-android-proj-ptk406-wuj591.zip` into Android Studio environment.
+2. Open the project in **Android Studio**.
+3. Build and run the app on an Android emulator or physical device running at least Android 15.0 (API 35).
+
+---
 
 ## Firebase Database
 
 ### Data Points Captured
-For each swipe gesture, the app captures the following data points:
+For each swipe gesture the app captures, Firebase stores the data as:
 - **User ID**: Identifies the user performing the action.
-- **Swipe Direction**: Indicates whether the user swiped left or right.
-- **Timestamp**: Records the time when the swipe occurred.
-- **Article/Item ID**: Tracks which article or image was swiped.
+  - **Swipe Direction**: Indicates whether the user swiped Up, Down, Left, or Right.
+  - **Swipe Duration**: How long in milliseconds since the finger pressed down onto the screen, until it was released.
+  - **Timestamp**: Records the time when the swipe occurred.
+
+---
 
 ## Python Backend
 
 ### Function
-The Python backend serves as the processing engine for the app, handling complex data analysis, user behavior insights, and API interactions with both the app and Firebase. It also processes data from the Firebase Realtime Database and performs tasks such as:
-- **Data Analysis**: Analyzing swipe behavior and patterns.
-- **API Endpoints**: Exposing RESTful APIs for the Android app to interact with.
-- **Firebase Interaction**: Retrieving and updating data in Firebase based on app interactions.
+The Python backend is used to retrieve and display swipe data stored in Firebase. It allows an admin to enter a username and fetch all recorded swipes associated with that user, sorting them in descending order based on their timestamp.
 
 ### How to Run:
-1. Clone the repository.
-2. Set up a Python environment and install the required dependencies using: pip install -r requirements.txt
-3. Configure the Firebase credentials by downloading the `google-services.json` file and placing it in the backend directory.
-4. Run the server using: python app.py
+1. Ensure you have Python installed (version 3.10 or later).
+2. Install the required dependencies by running: `pip install firebase-admin`.
+3. Place the Firebase service account JSON file `touchalytics-27705-firebase-adminsdk-fbsvc-faa52519b1.json` in the same directory as the Python script.
+4. Run the script: `python3 backend.py`.
