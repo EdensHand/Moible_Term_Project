@@ -42,3 +42,22 @@ For each swipe gesture, the app captures the following data points:
 
 ### Firebase Realtime Database Structure
 The data is stored in Firebase Realtime Database with the following structure:
+/username
+/swipeID
+/swipeDirection
+/swipeDurration
+/timestamp
+
+## Python Backend
+
+### Function
+The Python backend serves as the processing engine for the app, handling complex data analysis, user behavior insights, and API interactions with both the app and Firebase. It also processes data from the Firebase Realtime Database and performs tasks such as:
+- **Data Analysis**: Analyzing swipe behavior and patterns.
+- **API Endpoints**: Exposing RESTful APIs for the Android app to interact with.
+- **Firebase Interaction**: Retrieving and updating data in Firebase based on app interactions.
+
+### How to Run:
+1. Clone the repository.
+2. Set up a Python environment and install the required dependencies using: pip install -r requirements.txt
+3. Configure the Firebase credentials by downloading the `google-services.json` file and placing it in the backend directory.
+4. Run the server using: python app.py
