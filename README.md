@@ -1,4 +1,10 @@
-# Project Overview
+# Project Title
+
+## Authors
+- Mac Tully (wuj591)
+- Alejandro White (ptk406)
+  
+## Project Overview
 
 This project is a mobile application that integrates an Android app with Firebase for data storage and retrieval, while a Python backend is used for processing and additional functionality. The app allows users to interact with a specific feature, collect data, and store it in a Firebase Realtime Database. The backend handles complex tasks and provides APIs for the app to communicate with.
 
