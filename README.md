@@ -34,7 +34,7 @@ In the `MainActivity`, swipe gestures are detected using `OnTouchListener`. When
 - **Finding an Appropriate Data Structure**: `ArrayList` works well to store swipe data on-device, but is not compatible with Firebase. Once data is ready to send, `ArrayList` is converted to `hashmap` for proper Firebase data storage.
 - **Firebase Connectivity**: Implementing appropriate and compatible libraries, versions, and methods to successfully and reliably connect to the Firebase took significant trial and error. Generative AI assisted in the troubleshooting of `sendSwipeDataToFirebase`. 
 
-#### How to Run:
+### How to Run:
 1. Clone the repository.  **OR**  Unzip `touchalytics-android-proj-ptk406-wuj591.zip` into Android Studio environment.
 2. Open the project in **Android Studio**.
 3. Build and run the app on an Android emulator or physical device running at least Android 15.0 (API 35).
