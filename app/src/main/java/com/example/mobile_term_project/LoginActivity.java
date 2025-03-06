@@ -29,7 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         // 1. Create the Rainbow Colors
         int[] rainbowColors = {
                 Color.RED, Color.rgb(255, 165, 0), Color.YELLOW,
-                Color.GREEN, Color.BLUE, Color.rgb(75, 0, 130), Color.rgb(238, 130, 238)
+                Color.GREEN, Color.BLUE, Color.rgb(75, 0, 130),
+                Color.rgb(238, 130, 238)
         };
 
         // 2. Create the Gradient
@@ -70,8 +71,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
             if (username.isEmpty()) {
-                usernameEditText.setError("Username cannot be empty");
-            }else {
+                usernameEditText.setError("Provide a Username");
+            } else if (containsInvalidCharacters(username)) {
+                usernameEditText.setError("Username cannot contain '.', '#', '$', '[', or ']'");
+            } else {
                 // Create an Intent to start MainActivity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
@@ -83,5 +86,11 @@ public class LoginActivity extends AppCompatActivity {
                 usernameEditText.getText().clear();
             }
         });
+    }
+
+    private boolean containsInvalidCharacters(String username) {
+        return username.contains(".") || username.contains("#") ||
+                username.contains("$") || username.contains("[") ||
+                username.contains("]");
     }
 }
